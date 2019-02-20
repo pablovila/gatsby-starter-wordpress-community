@@ -1,0 +1,54 @@
+{
+  "name": "gatsby-starter-wordpress-community",
+  "private": true,
+  "description": "Gatsby starter to launch your blog from WordPress",
+  "version": "1.0.0",
+  "author": {
+    "name": "Pablo Vila",
+    "email": "pablo.vilafer@gmail.com",
+    "url": "https://www.pablovila.com"
+  },
+  "dependencies": {
+    "bulma": "^0.7.4",
+    "dotenv": "^6.2.0",
+    "gatsby": "^2.0.118",
+    "gatsby-image": "^2.0.29",
+    "gatsby-plugin-manifest": "^2.0.17",
+    "gatsby-plugin-netlify": "^2.0.10",
+    "gatsby-plugin-offline": "^2.0.23",
+    "gatsby-plugin-purgecss": "^3.1.0",
+    "gatsby-plugin-react-helmet": "^3.0.6",
+    "gatsby-plugin-sharp": "^2.0.20",
+    "gatsby-source-filesystem": "^2.0.20",
+    "gatsby-source-wordpress": "^3.0.33",
+    "gatsby-transformer-sharp": "^2.1.13",
+    "moment": "^2.24.0",
+    "prop-types": "^15.7.1",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "react-helmet": "^5.2.0"
+  },
+  "keywords": [
+    "gatsby",
+    "starter",
+    "wordpress",
+    "blog"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "start": "npm run develop",
+    "clean": "rimraf .cache public",
+    "build": "npm run clean && gatsby build",
+    "develop": "npm run clean && gatsby develop",
+    "serve": "gatsby serve",
+    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
+  },
+  "homepage": "https://github.com/pablovila/gatsby-starter-wordpress-community",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pablovila/gatsby-starter-wordpress-community"
+  },
+  "bugs": {
+    "url": "https://github.com/pablovila/gatsby-starter-wordpress-communityissues"
+  }
+}
