@@ -3,11 +3,8 @@ import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import { StaticQuery, graphql } from "gatsby";
 
-const htmlDecode = input => {
-  const e = document.createElement("div");
-  e.innerHTML = input;
-  return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-};
+const htmlDecode = str =>
+  str.replace(/&#(\d+);/g, ({ dec }) => String.fromCharCode(dec));
 
 function SEO({ description, lang, meta, keywords, title }) {
   return (
