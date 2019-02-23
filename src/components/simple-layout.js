@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import Header from "./header";
+import Navbar from "./navbar";
 import Footer from "./footer";
 import "../style/style.scss";
 
-const Layout = ({ children }) => (
+const SimpleLayout = ({ children }) => (
   <>
-    <Header />
+    <Navbar />
     <section className="section">
       <main className="container">{children}</main>
     </section>
@@ -15,8 +15,8 @@ const Layout = ({ children }) => (
   </>
 );
 
-Layout.propTypes = {
+SimpleLayout.propTypes = {
   children: PropTypes.node.isRequired
 };
 
-export default Layout;
+export default SimpleLayout;

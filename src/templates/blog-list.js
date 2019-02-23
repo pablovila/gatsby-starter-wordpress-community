@@ -5,67 +5,90 @@ import Layout from "../components/layout";
 import SEO from "../components/seo";
 import PostCard from "../components/post-card";
 
+/**
+ * Get pagination with ellipsis
+ * @link https://gist.github.com/kottenator/9d936eb3e4e3c3e02598
+ * @param {Number} current
+ * @param {Number} last
+ * @returns {Array}
+ */
+const pagination = (current, last) => {
+  const delta = 2;
+  const left = current - delta;
+  const right = current + delta + 1;
+
+  let range = [];
+  let rangeWithDots = [];
+  let l;
+
+  for (let i = 1; i <= last; i++) {
+    if (i === 1 || i === last || (i >= left && i < right)) {
+      range.push(i);
+    }
+  }
+  for (let j of range) {
+    if (l) {
+      if (j - l !== 1) {
+        rangeWithDots.push("...");
+      }
+    }
+    rangeWithDots.push(j);
+    l = j;
+  }
+
+  return rangeWithDots;
+};
+
 const BlogIndex = props => {
   const { data } = props;
   const siteTitle = data.site.siteMetadata.title;
   const posts = data.allWordpressPost.edges;
   const { currentPage, numPages } = props.pageContext;
-  const isFirst = currentPage === 1;
-  const isLast = currentPage === numPages;
-  const prevPage = currentPage - 1 === 1 ? "" : (currentPage - 1).toString();
-  const nextPage = (currentPage + 1).toString();
+
+  const pagesWithDots = pagination(currentPage, numPages);
 
   return (
     <Layout>
       <SEO title={siteTitle} keywords={[`gatsby`, `blog`, `wordpress`]} />
-      {posts.map(post => (
-        <PostCard
-          key={post.node.wordpress_id}
-          title={post.node.title}
-          excerpt={post.node.excerpt}
-          slug={post.node.slug}
-        />
-      ))}
-      <ul
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          alignItems: "center",
-          listStyle: "none",
-          padding: 0
-        }}
-      >
-        {!isFirst && (
-          <Link to={`/${prevPage}`} rel="prev">
-            ← Previous Page
-          </Link>
-        )}
-        {Array.from({ length: numPages }, (_, i) => (
-          <li
-            key={`pagination-number${i + 1}`}
-            style={{
-              margin: 0
-            }}
-          >
-            <Link
-              to={`/${i === 0 ? "" : i + 1}`}
-              style={{
-                textDecoration: "none",
-                color: i + 1 === currentPage ? "#ffffff" : "",
-                background: i + 1 === currentPage ? "#007acc" : ""
-              }}
-            >
-              {i + 1}
-            </Link>
-          </li>
+      <div className="columns is-multiline is-mobile blog-list">
+        {posts.map((post, index) => (
+          <PostCard
+            key={post.node.wordpress_id}
+            title={post.node.title}
+            excerpt={post.node.excerpt}
+            media={post.node.featured_media}
+            slug={post.node.slug}
+            index={index}
+          />
         ))}
-        {!isLast && (
-          <Link to={`/${nextPage}`} rel="next">
-            Next Page →
-          </Link>
-        )}
-      </ul>
+      </div>
+      <section className="section">
+        <nav
+          className="pagination is-centered"
+          role="navigation"
+          aria-label="pagination"
+        >
+          <ul className="pagination-list">
+            {pagesWithDots.map(index => (
+              <li key={index}>
+                {index === "..." ? (
+                  <span className="pagination-ellipsis">&hellip;</span>
+                ) : (
+                  <Link
+                    className={`pagination-link ${
+                      currentPage === index ? `is-current` : ""
+                    }`}
+                    to={`/${index === 1 ? "" : index}`}
+                    aria-label={`Goto page ${index}`}
+                  >
+                    {index}
+                  </Link>
+                )}
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </section>
     </Layout>
   );
 };
@@ -89,6 +112,16 @@ export const query = graphql`
           title
           slug
           excerpt
+          featured_media {
+            media_type
+            localFile {
+              childImageSharp {
+                fluid(maxWidth: 600) {
+                  src
+                }
+              }
+            }
+          }
         }
       }
     }

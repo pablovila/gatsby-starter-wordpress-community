@@ -4,9 +4,9 @@ require("dotenv").config({
 
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`
+    title: `Gatsby Starter WordPress Community`,
+    description: `Kick off a great Gatsby blog with this starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
+    author: `@pablovilafer`
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -20,7 +20,7 @@ module.exports = {
     {
       resolve: "gatsby-source-wordpress",
       options: {
-        baseUrl: "coderscantabria.com",
+        baseUrl: "gatsbystartercommunity.wordpress.com",
         protocol: "https",
         hostingWPCOM: true,
         useACF: false,
@@ -34,6 +34,7 @@ module.exports = {
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-sass`,
     `gatsby-plugin-purgecss`,
     {
       resolve: `gatsby-plugin-manifest`,
@@ -44,7 +45,7 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png` // This path is relative to the root of the site.
+        icon: `src/images/logo.svg` // This path is relative to the root of the site.
       }
     },
     "gatsby-plugin-offline",

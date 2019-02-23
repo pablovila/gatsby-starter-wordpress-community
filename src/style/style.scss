@@ -1,0 +1,79 @@
+// Importing variables
+@import "./variables.scss";
+
+// Importing Bulma from node_modules
+@import "~bulma/bulma.sass";
+
+@media screen and (min-width: 1088px) {
+  .post-card.column.is-one-third-desktop {
+    width: calc(33.3333% - 2rem);
+  }
+}
+
+.blog-list {
+  text-align: center;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.blog-list .post-card {
+  padding: 0;
+  box-shadow: 0 10px 10px -10px #ccc;
+  text-align: left;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  flex: auto;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 2rem;
+  float: left;
+}
+
+.blog-list .post-card .post-cover {
+  height: 250px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #ddd;
+}
+
+.blog-list .post-card .post-cover a {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: block;
+}
+
+.blog-list .post-card .post-excerpt {
+  padding: 1rem 1.5rem;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: calc(100% - 250px);
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-list .post-card .post-excerpt .title {
+  font-size: 1.5rem;
+}
+
+.blog-list .post-card .post-excerpt p:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+.blog-list .post-card .post-excerpt .excerpt {
+  flex-grow: 1;
+}
+
+footer.footer {
+  padding-top: 0;
+}

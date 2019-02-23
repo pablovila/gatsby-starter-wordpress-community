@@ -1,42 +1,103 @@
-import { Link } from "gatsby"
-import PropTypes from "prop-types"
-import React from "react"
+import React, { Component } from "react";
+import { Link, graphql, StaticQuery } from "gatsby";
+import logo from "../images/logo.svg";
 
-const Header = ({ siteTitle }) => (
-  <header
-    style={{
-      background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
-    }}
-  >
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: `white`,
-            textDecoration: `none`,
-          }}
-        >
-          {siteTitle}
-        </Link>
-      </h1>
-    </div>
-  </header>
-)
+class Header extends Component {
+  componentDidMount() {
+    const $navbarBurgers = Array.prototype.slice.call(
+      document.querySelectorAll(".navbar-burger"),
+      0
+    );
+    if ($navbarBurgers.length > 0) {
+      $navbarBurgers.forEach(el => {
+        el.addEventListener("click", () => {
+          const target = el.dataset.target;
+          const $target = document.getElementById(target);
 
-Header.propTypes = {
-  siteTitle: PropTypes.string,
+          el.classList.toggle("is-active");
+          $target.classList.toggle("is-active");
+        });
+      });
+    }
+  }
+
+  render() {
+    return (
+      <StaticQuery
+        query={graphql`
+          {
+            wordpressWpSettings {
+              title
+              description
+            }
+            allWordpressPage {
+              edges {
+                node {
+                  title
+                  wordpress_id
+                  slug
+                }
+              }
+            }
+          }
+        `}
+        render={data => {
+          const wordpressPages = data.allWordpressPage.edges;
+          const wordpressMetadata = data.wordpressWpSettings;
+          return (
+            <section className="hero is-link is-medium">
+              <div className="hero-head">
+                <nav className="navbar is-link">
+                  <div className="container">
+                    <div className="navbar-brand">
+                      <Link
+                        to="/"
+                        className="navbar-item"
+                        title="Gatsby Starter WordPress Community"
+                      >
+                        <img
+                          src={logo}
+                          alt="Gatsby Starter WordPress Community"
+                          style={{ width: "88px" }}
+                        />
+                      </Link>
+                      <div
+                        className="navbar-burger burger"
+                        data-target="navMenu"
+                      >
+                        <span />
+                        <span />
+                        <span />
+                      </div>
+                    </div>
+                    <div id="navMenu" className="navbar-menu">
+                      <div className="navbar-end has-text-centered">
+                        {wordpressPages.map(page => (
+                          <Link
+                            className="navbar-item"
+                            to={`/${page.node.slug}`}
+                            key={page.node.wordpress_id}
+                          >
+                            {page.node.title}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </nav>
+              </div>
+              <div className="hero-body">
+                <div className="container has-text-centered">
+                  <h1 className="title">{wordpressMetadata.title}</h1>
+                  <h2 className="subtitle">{wordpressMetadata.description}</h2>
+                </div>
+              </div>
+            </section>
+          );
+        }}
+      />
+    );
+  }
 }
 
-Header.defaultProps = {
-  siteTitle: ``,
-}
-
-export default Header
+export default Header;
