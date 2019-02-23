@@ -1,28 +1,35 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
-import moment from "moment";
+import dayjs from "dayjs";
 
 import SEO from "../components/seo";
-import Layout from "../components/layout";
+import SimpleLayout from "../components/simple-layout";
 
 export default props => {
   const post = props.data.wordpressPost;
   const siteTitle = props.data.site.siteMetadata.title;
   const { previous, next } = props.pageContext;
 
-  const date = moment(post.date).format("DD MMMM YYYY");
+  const date = dayjs(post.date).format("DD MMMM YYYY");
 
   return (
-    <Layout title={siteTitle}>
+    <SimpleLayout title={siteTitle}>
       <SEO title={post.title} keywords={[`gatsby`, `blog`, `wordpress`]} />
-      <span>
-        {date} |{" "}
-        {post.categories.map((c, index) => (
-          <span key={index}>{c.name}</span>
-        ))}
-      </span>
-      <h1 dangerouslySetInnerHTML={{ __html: post.title }} />
-      <div dangerouslySetInnerHTML={{ __html: post.content }} />
+      <section className="section has-text-centered">
+        <span className="is-uppercase">
+          {date} |{" "}
+          {post.categories.map((c, index) => (
+            <span key={index}>{c.name}</span>
+          ))}
+        </span>
+        <h1
+          className="title is-size-2 has-text-weight-bold is-bold-light"
+          dangerouslySetInnerHTML={{ __html: post.title }}
+        />
+      </section>
+      <section className="section">
+        <div dangerouslySetInnerHTML={{ __html: post.content }} />
+      </section>
       <ul
         style={{
           display: `flex`,
@@ -35,19 +42,19 @@ export default props => {
         <li>
           {previous && (
             <Link to={`/${previous.slug}`} rel="prev">
-              ← Anterior
+              ← Previous
             </Link>
           )}
         </li>
         <li>
           {next && (
             <Link to={`/${next.slug}`} rel="next">
-              Siguiente →
+              Next →
             </Link>
           )}
         </li>
       </ul>
-    </Layout>
+    </SimpleLayout>
   );
 };
 

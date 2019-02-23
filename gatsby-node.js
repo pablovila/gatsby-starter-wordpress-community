@@ -2,11 +2,20 @@ const path = require(`path`);
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
+
+  const blogPage = path.resolve(`./src/templates/blog-page.js`);
   const blogList = path.resolve(`./src/templates/blog-list.js`);
   const blogPost = path.resolve(`./src/templates/blog-post.js`);
 
   return graphql(`
     {
+      allWordpressPage {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
       allWordpressPost(
         filter: { status: { eq: "publish" } }
         sort: { fields: [date], order: DESC }
@@ -19,6 +28,15 @@ exports.createPages = ({ graphql, actions }) => {
       }
     }
   `).then(result => {
+    const pages = result.data.allWordpressPage.edges;
+    pages.forEach(page => {
+      createPage({
+        path: page.node.slug,
+        component: blogPage,
+        context: { slug: page.node.slug }
+      });
+    });
+
     const posts = result.data.allWordpressPost.edges;
     posts.forEach((post, index) => {
       const previous =
