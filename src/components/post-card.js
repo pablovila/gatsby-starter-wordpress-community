@@ -5,7 +5,7 @@ import BackgroundImage from "./background-image.js";
 const PostCard = props => {
   let imageSrc = null;
   if (props.media && props.media.localFile)
-    imageSrc = props.media.localFile.childImageSharp.fluid.src;
+    imageSrc = props.media.localFile.childImageSharp.fixed.src;
 
   const index = props.index;
 

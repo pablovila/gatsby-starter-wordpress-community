@@ -6,7 +6,7 @@ const StockImages = props => (
     query={graphql`
       fragment fluidImage on File {
         childImageSharp {
-          fluid(maxWidth: 600) {
+          fluid(maxWidth: 1024) {
             src
           }
         }

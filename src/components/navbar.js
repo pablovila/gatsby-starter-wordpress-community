@@ -41,7 +41,7 @@ class Navbar extends Component {
           const wordpressPages = data.allWordpressPage.edges;
           return (
             <nav
-              className="navbar is-link"
+              className="navbar is-primary"
               role="navigation"
               aria-label="main-navigation"
             >

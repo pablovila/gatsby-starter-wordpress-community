@@ -45,9 +45,9 @@ class Header extends Component {
           const wordpressPages = data.allWordpressPage.edges;
           const wordpressMetadata = data.wordpressWpSettings;
           return (
-            <section className="hero is-link is-medium">
+            <section className="hero is-primary is-medium">
               <div className="hero-head">
-                <nav className="navbar is-link">
+                <nav className="navbar is-primary">
                   <div className="container">
                     <div className="navbar-brand">
                       <Link
